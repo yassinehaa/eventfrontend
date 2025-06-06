@@ -1,0 +1,11 @@
+<div *ngIf="loading">Loading events...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error" class="event-list">
+  <div *ngFor="let event of events" class="event-card" (click)="goToDetails(event.idEvenement)">
+    <h3>{{ event.titre }}</h3>
+    <p><strong>Type:</strong> {{ event.type }}</p>
+    <p><strong>Start:</strong> {{ event.dateDebut }} | <strong>End:</strong> {{ event.dateFin }}</p>
+    <p>{{ event.description | slice:0:100 }}...</p>
+  </div>
+</div>

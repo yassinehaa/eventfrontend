@@ -48,7 +48,7 @@ export class LoginComponent {
       },
       error: (err: any) => {
         this.snackBar.open('Login failed', 'Dismiss', { duration: 3000 });
-        console.error(err);
+        console.error();
       }
     });
   }

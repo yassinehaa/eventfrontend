@@ -1,0 +1,20 @@
+<h2>Events</h2>
+
+<form [formGroup]="eventForm" (ngSubmit)="saveEvent()">
+  <input formControlName="titre" placeholder="Title">
+  <input formControlName="type" placeholder="Type">
+  <input formControlName="nombrePlase" type="number" placeholder="Places">
+  <input formControlName="description" placeholder="Description">
+  <input formControlName="dateDebut" type="date">
+  <input formControlName="dateFin" type="date">
+  <button type="submit">{{ editing ? 'Update' : 'Create' }}</button>
+  <button type="button" (click)="resetForm()">Cancel</button>
+</form>
+
+<ul>
+  <li *ngFor="let event of events">
+    <strong>{{ event.titre }}</strong> - {{ event.type }}
+    <button (click)="editEvent(event)">Edit</button>
+    <button (click)="deleteEvent(event.idEvenement)">Delete</button>
+  </li>
+</ul>

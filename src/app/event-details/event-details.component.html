@@ -1,0 +1,19 @@
+<div *ngIf="loading">Loading event details...</div>
+
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="event && !loading" class="event-details">
+  <h2>{{ event.titre }}</h2>
+  <p><strong>Type:</strong> {{ event.type }}</p>
+  <p><strong>Description:</strong> {{ event.description }}</p>
+  <p><strong>Places Available:</strong> {{ event.nombrePlase }}</p>
+  <p><strong>Start Date:</strong> {{ event.dateDebut }}</p>
+  <p><strong>End Date:</strong> {{ event.dateFin }}</p>
+
+  <h3>Reservations ({{ event.reservations.length }})</h3>
+  <ul>
+    <li *ngFor="let reservation of event.reservations">
+      {{ reservation.nomClient }} - {{ reservation.emailClient }}
+    </li>
+  </ul>
+</div>
