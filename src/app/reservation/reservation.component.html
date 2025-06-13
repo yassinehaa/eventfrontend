@@ -1,0 +1,50 @@
+<div *ngIf="!authService.isClient()">
+  <p class="auth-message">Only clients can reserve events. Please log in as a client.</p>
+  <button class="auth-button" (click)="router.navigateByUrl('/login')">Login</button>
+</div>
+<div *ngIf="authService.isClient()" class="events-container">
+  <h2>Available Events</h2>
+  <ul class="event-list">
+    <li *ngFor="let event of events" class="event-card">
+      <span class="event-title">{{ event.titre }}</span>
+      <span class="event-details">({{ event.type }}) - {{ event.dateDebut }}</span>
+      <button class="reserve-button" (click)="openReservationForm(event.idEvenement)">Reserve</button>
+    </li>
+  </ul>
+  <h2>Reserved Events</h2>
+  <ul class="event-list">
+    <li *ngFor="let reservation of reservedEvents" class="event-card reserved">
+      <span class="event-title">{{ reservation.nomReservation }}</span>
+      <span class="event-details">{{ getEventTitle(reservation.idEvenement) }} ({{ getEventType(reservation.idEvenement) }})</span>
+      <span class="event-details">{{ reservation.dateReservation }} - Place: {{ reservation.place }}, Price: {{ reservation.prix }}</span>
+    </li>
+  </ul>
+  <div *ngIf="showReservationForm" class="form-container">
+    <form [formGroup]="reservationForm" (ngSubmit)="reserve()" class="reservation-form">
+      <div class="form-group">
+        <label for="nomReservation">Reservation Name:</label>
+        <input id="nomReservation" formControlName="nomReservation" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input id="description" formControlName="description">
+      </div>
+      <div class="form-group">
+        <label for="dateReservation">Date (YYYY-MM-DD):</label>
+        <input id="dateReservation" type="date" formControlName="dateReservation" required>
+      </div>
+      <div class="form-group">
+        <label for="place">Place:</label>
+        <input id="place" type="number" formControlName="place" required>
+      </div>
+      <div class="form-group">
+        <label for="prix">Price:</label>
+        <input id="prix" type="number" formControlName="prix" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="submit-button" [disabled]="reservationForm.invalid">Submit Reservation</button>
+        <button type="button" class="cancel-button" (click)="showReservationForm = false">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

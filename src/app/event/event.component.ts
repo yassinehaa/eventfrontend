@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../core/event.service';
 import { Event } from '../pages/events/event.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgForOf
   ],
   styleUrls: ['./event.component.css']
 })

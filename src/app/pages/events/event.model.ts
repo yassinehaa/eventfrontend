@@ -2,7 +2,6 @@ export interface Reservation {
   id: number;
   nomClient: string;
   emailClient: string;
-  // Add more fields if needed
 }
 
 export interface Event {

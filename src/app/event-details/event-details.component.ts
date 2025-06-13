@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../core/event.service';
 import { Event } from '../pages/events/event.model';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
   imports: [
-    NgIf
+    NgIf,
+    NgForOf
   ],
   styleUrls: ['./event-details.component.css']
 })

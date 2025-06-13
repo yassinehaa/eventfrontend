@@ -1,0 +1,229 @@
+/* Container for the entire component */
+.events-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Heading styles */
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Authentication message and button */
+.auth-message {
+  text-align: center;
+  color: #d32f2f;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.auth-button {
+  background-color: #1976d2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #1565c0;
+}
+
+/* Event list styling */
+.event-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Event card styling */
+.event-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+/* Hover effect for event cards */
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Reserved event card styling */
+.event-card.reserved {
+  background: #f5f5f5;
+  border-left: 4px solid #4caf50;
+}
+
+/* Event title and details */
+.event-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.event-details {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Reserve button */
+.reserve-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+}
+
+.reserve-button:hover {
+  background-color: #45a049;
+}
+
+/* Form container */
+.form-container {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling */
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.submit-button, .cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #1565c0;
+}
+
+.submit-button:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .events-container {
+    background: #121212;
+  }
+
+  h2 {
+    color: #e0e0e0;
+  }
+
+  .event-card {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  .event-card.reserved {
+    background: #252525;
+    border-left-color: #66bb6a;
+  }
+
+  .event-title {
+    color: #e0e0e0;
+  }
+
+  .event-details {
+    color: #b0b0b0;
+  }
+
+  .form-container {
+    background: #1e1e1e;
+  }
+
+  .form-group label {
+    color: #e0e0e0;
+  }
+
+  .form-group input {
+    background: #333;
+    border-color: #555;
+    color: #e0e0e0;
+  }
+
+  .form-group input:focus {
+    border-color: #42a5f5;
+  }
+}

@@ -1,27 +1,85 @@
+// src/app/components/login/login.component.ts
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../../../core/auth.service'; // We'll create this next
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/auth.service';
+import {Router, RouterLink} from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
+  template: `
+    <div class="login-container">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input id="email" type="email" formControlName="email" required>
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+            Please enter a valid email.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input id="password" type="password" formControlName="password" required>
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+            Password is required.
+          </div>
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+      <p>Don't have an account? <a routerLink="/register">Register here</a>.</p>
+    </div>
+  `,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule
+    NgIf,
+    RouterLink
   ],
-  templateUrl: './login.component.html'
+  styles: [`
+    .login-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+  `]
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -29,27 +87,33 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit() {
-    if (this.loginForm.invalid) return;
-
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => {
-        this.snackBar.open('Login successful', 'OK', { duration: 3000 });
-        this.router.navigate(['/']); // Redirect to home
-      },
-      error: (err: any) => {
-        this.snackBar.open('Login failed', 'Dismiss', { duration: 3000 });
-        console.error();
-      }
-    });
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login({ email, password }).subscribe({
+        next: (response) => {
+          // Store the token and role in localStorage
+          localStorage.setItem('authToken', response.access_token);
+          localStorage.setItem('role', response.role);
+          console.log('Login successful, token stored:', response.access_token); // Debug log
+          alert('Login successful!');
+          this.router.navigateByUrl(response.role === 'ADMIN' ? '/event' : '/reserve');
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          alert('Login failed: ' + (err.error?.message || 'Invalid credentials'));
+        }
+      });
+    } else {
+      alert('Please fill out the form correctly.');
+    }
   }
 }

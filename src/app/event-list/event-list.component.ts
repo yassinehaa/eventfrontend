@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../core/event.service';
 import { Event } from '../pages/events/event.model';
 import { Router } from '@angular/router';
-import {SlicePipe} from '@angular/common';
+import {NgForOf, NgIf, SlicePipe} from '@angular/common';
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   imports: [
-    SlicePipe
+    SlicePipe,
+    NgForOf,
+    NgIf
   ],
   styleUrls: ['./event-list.component.css']
 })
